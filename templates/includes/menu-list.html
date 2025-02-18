@@ -1,12 +1,12 @@
-
 <ul class="nav">
   <li class="{% if 'dashboard' in segment %} active {% endif %}">
     <a href="/">
-      <i class="tim-icons icon-chart-pie-36"></i>
-      <p>Dashboard</p>
+      <i class="fas fa-home"></i>
+      <p>INICIO</p>
     </a>
   </li>
-  {% if not request.user.is_authenticated %}
+
+  <!--
   <li class="{% if 'pages' in parent %}active{% endif %}">
     <a data-toggle="collapse" href="#pagesExamples">
       <i class="tim-icons icon-lock-circle"></i>
@@ -15,16 +15,17 @@
         <b class="caret"></b>
       </p>
     </a>
+
     <div class="collapse" id="pagesExamples">
       <ul class="nav">
         <li>
-          <a href="{% url 'auth_signin' %}">
+          <a href="">
             <span class="sidebar-mini-icon">L</span>
             <span class="sidebar-normal"> Login </span>
           </a>
         </li>
         <li>
-          <a href="{% url 'auth_signup' %}">
+          <a href="">
             <span class="sidebar-mini-icon">R</span>
             <span class="sidebar-normal"> Register </span>
           </a>
@@ -32,9 +33,42 @@
       </ul>
     </div>
   </li>
+-->
 
-  {% endif %}
- 
+
+  <li class="{% if 'pages' in parent %}active{% endif %}">
+    {% for modulo in modulos_accesibles %}
+
+    <a data-toggle="collapse" href="#pages{{ modulo.nombre }}">
+      
+      <i class="fas {{ modulo.icono }} mr-2 "></i>
+      <p>
+        {{ modulo.nombre}}
+        <b class="caret"></b>
+      </p>
+    </a>
+
+    <div class="collapse" id="pages{{ modulo.nombre }}">
+      <ul class="nav">
+        {% if modulo.submodulos %}
+          {% for submodulo in modulo.submodulos %}
+            <li>
+              <a href="{% url submodulo.url %}">
+                <span class="sidebar-mini-icon">L</span>
+                <span class="sidebar-normal">{{ submodulo.nombre }} </span>
+              </a>
+            </li>
+          {% endfor %}
+        {% endif %}
+
+      </ul>
+    </div>
+
+    {% endfor %}
+
+  </li>
+
+
 
   {% if request.user.is_authenticated and not request.user.is_superuser %}
   <li class="{% if 'icons' in segment %} active {% endif %}">

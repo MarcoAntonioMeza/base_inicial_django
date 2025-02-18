@@ -141,8 +141,8 @@ form .aligned select + p.help,
 form .aligned input + div.help,
 form .aligned textarea + div.help,
 form .aligned select + div.help {
-    /*margin-left: 160px;*/
-    /*padding-left: 10px;*/
+    margin-left: 160px;
+    padding-left: 10px;
 }
 
 form .aligned ul li {

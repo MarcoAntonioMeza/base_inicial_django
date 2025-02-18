@@ -1,0 +1,91 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% block title %} {{usuario.full_name_bread}} {% endblock title %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="header-body py-3">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                <ol class="breadcrumb bg-light rounded-3 shadow-sm px-3 py-2">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'home' %}" class="text-primary"><i class="fas fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'user_index' %}"  class="text-dark fw-semibold">USUARIOS</a>
+                    </li>
+                    <li class="breadcrumb-item active text-muted" aria-current="page">
+                        {{ usuario.full_name_bread }}
+                    </li>
+                </ol>
+            </nav>
+            <!-- Title -->
+            <div class="row align-items-center py-4">
+
+                <div class="col-lg-12 col-5 text-right">
+                    {% if perms.usuarios.can_update_cliente %}
+                    <a href="{% url 'user_update' usuario.id %}" class="btn btn-lg btn-neutral">EDITAR</a>
+                    {% endif %}
+                    {% if perms.usuarios.can_delete_cliente %}
+                    <a href="{% url 'user_delete' usuario.id %}" class="btn btn-lg btn-danger">ELIMINAR</a>
+                    {% endif %}
+                    <a href="{% url 'user_index' %}" class="btn btn-lg btn-secondary">CANCELAR</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-body text-center">
+                    <h3 class="mb-2">{{ usuario.full_name }}</h3>
+                    <p class="text-muted mb-3">{{ usuario.email }}</p>
+    
+                    <div class="mt-3">
+                        <a href="{% url 'user_update' id=usuario.id %}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                    </div>
+    
+                    <hr class="bg-light">
+    
+                    <div class="mt-3">
+                        <h5>Acceso a la App:</h5>
+                        {% if usuario.access_to_app %}
+                        <span class="badge bg-success"><i class="fas fa-check-circle"></i> Permitido</span>
+                        {% else %}
+                        <span class="badge bg-danger"><i class="fas fa-times-circle"></i> Denegado</span>
+                        {% endif %}
+                    </div>
+    
+                    <hr class="bg-light">
+    
+                    <div class="mt-3 text-start">
+                        <h5><i class="fas fa-map-marker-alt"></i> Dirección</h5>
+                        <p><strong>Estado:</strong> {{ direccion.estado.nombre }}</p>
+                        <p><strong>Municipio:</strong> {{ direccion.municipio.nombre }}</p>
+                        <p><strong>Colonia:</strong> {{ direccion.colonia.d_asenta }}</p>
+                        <p><strong>Calle:</strong> {{ direccion.calle }}</p>
+                        <p><strong>No. Ext:</strong> {{ direccion.numero_exterior }}</p>
+                        {% if direccion.numero_interior %}
+                        <p><strong>No. Int:</strong> {{ direccion.numero_interior }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+
+
+{% endblock content %}

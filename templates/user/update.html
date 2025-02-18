@@ -1,0 +1,55 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block title %} {{usuario.full_name_bread}} {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="header-body py-3">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-4">
+                <ol class="breadcrumb bg-light rounded-3 shadow-sm px-3 py-2">
+
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'home' %}" class="text-primary"><i class="fas fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'user_index' %}" class="text-dark fw-semibold">USUARIOS</a>
+                    </li>
+                    <li class="breadcrumb-item "class="text-dark fw-semibold">
+                        EDITAR
+                    </li>
+                    <li class="breadcrumb-item active text-muted" aria-current="page">
+
+                        {{ usuario.full_name_bread }} 
+                    </li>
+                </ol>
+            </nav>
+
+        </div>
+    </div>
+
+
+
+<div class="container-fluid mt--6">
+        {% include 'user/form.html' %}
+   
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+
+<script>
+
+</script>
+
+{% endblock javascripts %}

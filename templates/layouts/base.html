@@ -4,6 +4,9 @@
 {% get_current_language_bidi as LANGUAGE_BIDI %}
 
 <html lang="en">
+<title>
+    {% block title %} {% endblock %}
+</title>
 
 <head>
     {% include 'includes/head.html' %}
@@ -20,7 +23,10 @@
             {% block navigation %}
             {% include 'includes/navigation.html' %}
             {% endblock navigation %}
-            {% block content %}{% endblock content %}
+            <div class="content">
+                {% block content %}
+                    
+                {% endblock content %} </div>
             {% block footer %}
             {% include 'includes/footer.html' %}
             {% endblock footer %}
