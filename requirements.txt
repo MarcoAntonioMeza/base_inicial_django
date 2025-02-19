@@ -1,6 +1,7 @@
 asgiref==3.8.1
 Django==5.1.6
-# django-admin-black==1.0.15
+#django-admin-black==1.0.15
+django-widget-tweaks==1.5.0
 mysqlclient==2.2.7
 numpy==2.2.3
 pandas==2.2.3
