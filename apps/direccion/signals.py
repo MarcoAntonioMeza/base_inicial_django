@@ -3,6 +3,7 @@ from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 import time
 from django.conf import settings
+import chardet
 
 from .models import Estado, Municipio, CodigoPostal, Colonia
 
@@ -13,10 +14,23 @@ def insertar_datos_iniciales(sender, **kwargs):
             # Iniciar el temporizador
             start_time = time.time()
             path = 'sepomex\CPdescarga.txt'
-            df = pd.read_csv(path, delimiter="|",encoding="latin1")
+            #df = pd.read_csv(path, delimiter="|",encoding="latin1")
+            with open(path, "rb") as f:
+                result = chardet.detect(f.read(10000))  # Analiza los primeros 10,000 bytes
+                print("Encoding detectado:", result["encoding"])
+
+            df = pd.read_csv(path, delimiter="|", encoding=result["encoding"])
+
+            #print(df.sample(10))
+            #return;
             columnas_a_convertir = ['d_asenta','D_mnpio','d_estado']
             df[columnas_a_convertir] = df[columnas_a_convertir].apply(lambda x: x.str.strip().str.upper())
             #print(df.shape)
+            #print(df.sample(10))
+            #exit()
+            #
+            #return
+            #exit()
 
 
                 # Insertar Estados
@@ -29,8 +43,8 @@ def insertar_datos_iniciales(sender, **kwargs):
             print(f"Tiempo de ejecución: {time.time() - start_time} segundos para estados")
 
             # Insertar Municipios
-            for _, row in df[['D_mnpio', 'd_estado']].drop_duplicates().iterrows():
-                estado = Estado.objects.get(nombre=row['d_estado'])  # Obtener el estado
+            for _, row in df[['D_mnpio', 'c_estado']].drop_duplicates().iterrows():
+                estado = Estado.objects.get(id=row['c_estado'])  # Obtener el estado
 
                 # Buscar municipios con el mismo nombre y estado
                 municipios = Municipio.objects.filter(nombre=row['D_mnpio'], estado=estado)
@@ -54,9 +68,9 @@ def insertar_datos_iniciales(sender, **kwargs):
             print(f"Tiempo de ejecución: {time.time() - start_time} segundos para códigos postales")
 
             # Insertar Colonias
-            for _, row in df[['d_asenta', 'd_tipo_asenta', 'd_codigo', 'D_mnpio']].drop_duplicates().iterrows():
+            for _, row in df[['d_asenta', 'd_tipo_asenta', 'd_codigo', 'D_mnpio','c_estado']].drop_duplicates().iterrows():
                 # Buscar el municipio correspondiente
-                municipio = Municipio.objects.filter(nombre=row['D_mnpio']).first()  # Usamos filter() en lugar de get()
+                municipio = Municipio.objects.filter(nombre=row['D_mnpio'],estado=row['c_estado']).first()  # Usamos filter() en lugar de get()
                 if not municipio:
                     # Si no existe el municipio, puedes decidir si lo creas aquí
                     municipio = Municipio.objects.create(

@@ -9,7 +9,7 @@
             <a href="{% url 'user_index' %}" class="btn btn-lg btn-secondary">CANCELAR</a>
         </div>
     </div>
-   
+
     <div class="row">
         <div class="col-md-6">
             <div class="card shadow">
@@ -23,8 +23,39 @@
                 </div>
                 <div class="card-body">
 
-                   
-                   
+                    <div class="row  text-center my-3">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 ">
+
+                            <img id="profilePicturePreview" src="#" alt="Vista previa de la imagen"
+                                class="rounded-circle" style="max-width: 200px; display: none;" />
+
+
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 text-center">
+                            <label for="id_profile_picture" class="form-control-label">Foto de Perfil</label>
+                            <div class="custom-file-container">
+                                <!-- Input de archivo oculto -->
+                                {{ user_form.profile_picture }}
+                                <!-- Botón personalizado -->
+                                <label for="id_profile_picture" class="btn btn-outline-primary custom-btn">Seleccionar
+                                    Imagen</label>
+                            </div>
+                            <!-- Mostrar errores del campo de foto de perfil -->
+                            {% if user_form.profile_picture.errors %}
+                            <div class="text-danger">
+                                {% for error in user_form.profile_picture.errors %}
+                                <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
 
                     <div class="row">
                         <!-- Username -->
@@ -125,7 +156,7 @@
                         </div>
                     </div>
 
-                    
+
 
 
 
@@ -336,7 +367,15 @@
                 </div>
 
 
-                
+                <div class="row my-3">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+
+                        <div id="map"></div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
 
 
 
@@ -450,7 +489,7 @@
 
         $('#id_codigo_postal').on('input', function () {
             var codigoPostal = $(this).val();
-            if (codigoPostal.length === 5) {
+            if (codigoPostal.length === 4) {
                 geocodePostalCode(codigoPostal);
                 $.get("{% url 'search_dir' %}", { codigo_postal: codigoPostal }, function (data) {
                     if (data.municipios.length > 0) {
@@ -467,6 +506,24 @@
                         $('#id_colonia').empty().append('<option value="">Seleccione una Colonia</option>').prop('disabled', true);
                     }
                 });
+            } else {
+                geocodePostalCode(codigoPostal);
+                $.get("{% url 'search_dir' %}", { codigo_postal: codigoPostal }, function (data) {
+                    if (data.municipios.length > 0) {
+                        //$('#id_estado').val(data.municipios[0].estado_id);//.change();
+                        $('#id_estado').val(data.municipios[0].estado_id).trigger('change.select2');
+
+                        $('#id_municipio').empty().append('<option value="">Seleccione un Municipio</option>');
+
+                        data.municipios.forEach(function (municipio) {
+                            $('#id_municipio').append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
+                        });
+                        $('#id_municipio').val(data.municipios[0].id).change();
+                        $('#id_municipio').prop('disabled', false).trigger('change');
+                        $('#id_colonia').empty().append('<option value="">Seleccione una Colonia</option>').prop('disabled', true);
+                    }
+                });
+
             }
         });
 

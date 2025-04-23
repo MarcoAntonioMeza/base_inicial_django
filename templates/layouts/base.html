@@ -1,42 +1,39 @@
 <!DOCTYPE html>
+
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
 
 <html lang="en">
-<title>
-    {% block title %} {% endblock %}
-</title>
 
 <head>
-    {% include 'includes/head.html' %}
-    {% block extrahead %}{% endblock extrahead %}
-    {% block extrastyle %}{% endblock extrastyle %}
+  {% include "includes/head.html" %}
+  {% block extrastyle %}{% endblock extrastyle %}
+  {% block extrahead %}{% endblock extrahead %}
+  <title>
+    {% block title %} {% endblock %}
+  </title>
 </head>
 
-<body class="{% block bodyclass %}{% endblock bodyclass %}">
-    <div class="wrapper">
-        {% block sidebar %}
-        {% include 'includes/sidebar.html' %}
-        {% endblock sidebar %}
-        <div class="main-panel">
-            {% block navigation %}
-            {% include 'includes/navigation.html' %}
-            {% endblock navigation %}
-            <div class="content">
-                {% block content %}
-                    
-                {% endblock content %} </div>
-            {% block footer %}
-            {% include 'includes/footer.html' %}
-            {% endblock footer %}
-        </div>
-    </div>
-    {% block fixed-plugin %}
-    {% include 'includes/fixed-plugin.html' %}
-    {% endblock fixed-plugin %}
-    {% include 'includes/scripts.html' %}
-    {% block extrajs %}{% endblock extrajs %}
+<body class="g-sidenav-show  bg-gray-100">
+  {% block sidebar %}
+    {% include "includes/sidebar.html" %}
+  {% endblock sidebar %}
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    {% block navigation %}
+        {% include "includes/navigation.html" %}
+    {% endblock navigation %}
+    
+    {% block content %}{% endblock content %}
+  </main>
+
+  {% block configurator %}
+    {% include "includes/configurator.html" %}
+  {% endblock configurator %}
+  
+  {% include "includes/scripts.html" %}
+  
+  {% block extrajs %}{% endblock extrajs %}
 </body>
 
 </html>
