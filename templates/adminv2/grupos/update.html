@@ -9,14 +9,14 @@
 
 
 {% block content %}
-<div class="header bg-primary pb-6">
+
     <div class="container-fluid">
-        <div class="header-body">
+        <div class="header-body py-3">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <ol class="breadcrumb bg-light rounded-3 shadow-sm px-3 py-2">
                     <li class="breadcrumb-item">
-                        <a href="{% url 'home' %}"><i class="fas fa-home"></i></a>
+                        <a href="{% url 'home' %}" class="text-primary"><i class="fas fa-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{% url 'grupos_index' %}">GRUPOS Y PERMISOS </a>
@@ -33,7 +33,7 @@
 
         </div>
     </div>
-</div>
+
 
 
 <div class="container-fluid mt--6">

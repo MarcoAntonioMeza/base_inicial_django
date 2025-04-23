@@ -10,29 +10,30 @@
 
 {% block content %}
 
-    <div class="container-fluid">
-        <div class="header-body">
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb" class="d-md-inline-block">
-                <ol class="breadcrumb bg-light rounded-3 shadow-sm px-3 py-2">
-                    <li class="breadcrumb-item">
-                        <a href="{% url 'home' %}"><i class="fas fa-home"></i></a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{% url 'user_index' %}">USUARIOS</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        NUEVO
-                    </li>
-                </ol>
-            </nav>
+<div class="container-fluid">
+    <div class="header-body py-3">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="d-md-inline-block">
+            <ol class="breadcrumb bg-light rounded-3 shadow-sm px-3 py-2">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %} " class="text-primary"><i class="fas fa-home"></i></a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'user_index' %}">USUARIOS</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    NUEVO
+                </li>
+            </ol>
+        </nav>
 
-        </div>
     </div>
+</div>
 
-<div class="container-fluid mt--6">
-    
-        {% include 'user/form.html' %}
+
+<div class="container-fluid_">
+
+    {% include 'user/form.html' %}
 
 </div>
 

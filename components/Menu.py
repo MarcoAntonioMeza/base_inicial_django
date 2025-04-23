@@ -104,16 +104,16 @@ def listado_modulos(request):
                     'url': 'user_index',
                     'icono': 'fa-eye',  # Icono para el submódulo 'Ver Usuarios'
                 },
-                ##=====================================
-                ##  SUBMÓDULO DE GRUPOS
-                ##=====================================
-                #{
-                #    'app': 'auth',
-                #    'nombre': 'Grupos',
-                #    'permiso': 'can_view_grupo',
-                #    'url': 'grupos_index',
-                #    'icono': 'fa-eye',  # Icono para el submódulo 'Ver Usuarios'
-                #},
+                #=====================================
+                #  SUBMÓDULO DE GRUPOS
+                #=====================================
+                {
+                    'app': 'auth',
+                    'nombre': 'Grupos',
+                    'permiso': 'can_view_grupo',
+                    'url': 'grupos_index',
+                    'icono': 'fa-eye',  # Icono para el submódulo 'Ver Usuarios'
+                },
                 ##=====================================
                 ##  SUBMÓDULO DE CONSTANTES DE INGENIERIA
                 ##=====================================
